@@ -8,6 +8,8 @@ The tweets are constructed from a collection of written texts by Preston Hamlin 
 Our current collection has generated about 52 "complete thoughts" that arrive under 140 characters.
 This was not a small feat... If you know The Preston Hamlin, you know this.
 
+![prestonhamlet](https://pbs.twimg.com/media/BqbUK9fIUAABfLG.jpg "Preston Hamlet")
+
 
 Current Schedule
 -----------------
