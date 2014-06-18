@@ -7,15 +7,16 @@ Description: This is a small Python script that post tweets on the behalf of Pre
 The tweets are constructed from a collection of written texts by Preston Hamlin himself.
 """
 
-
+import os
 import twitter
 import sqlite3
 from datetime import datetime
 import ConfigParser
 
-config = ConfigParser.ConfigParser()
-config.read("config.cfg")
+CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 
+config = ConfigParser.ConfigParser()
+config.read(os.path.join(CURR_DIR, "config.cfg"))
 
 
 def initdb():
@@ -37,10 +38,10 @@ def get_quotes():
   then inserts each line under 140 characters into the database
   quotes are unique
   """
-  f = open("data/cleaned.txt")
+  f = open(os.path.join(CURR_DIR, "data/cleaned.txt"))
   l = [line.split('. ') for line in f]
 
-  db = sqlite3.connect('quotes.db')
+  db = sqlite3.connect(os.path.join(CURR_DIR,"quotes.db"))
   cursor = db.cursor()
 
   for k in l:
@@ -69,7 +70,7 @@ def tweet():
     access_token_secret=config.get('Tweet', 'ACCESS_SECRET') )
 
 
-  db = sqlite3.connect('quotes.db')
+  db = sqlite3.connect(os.path.join(CURR_DIR, "quotes.db"))
   cursor = db.cursor()
 
   cursor.execute('SELECT MIN(use_count) FROM quotes')
@@ -87,8 +88,9 @@ def tweet():
   tweet tweet
   """
   # print t.VerifyCredentials()
+  # print str(update)
   status = t.PostUpdate(update)
-  print status.text
+  print str(last_used) + ":" + status.text
 
   cursor.execute('UPDATE quotes SET use_count=?, last_used=? WHERE id=?', (use_count, last_used, tweet[0],))
   db.commit()
