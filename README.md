@@ -1,69 +1,79 @@
-pBotty :: The Preston Twitter Bot
+pBotty (Peabody) :: The Preston Twitter Bot
 =================================
 
-This is a small Python script that post tweets on the behalf of Preston Hamlin.
+This is a small Python script that post tweets on the behalf of one Preston Hamlin.
 
 The tweets are constructed from a collection of written texts by Preston Hamlin himself.
 
-Our current collection has generated about 52 "complete thoughts" that arrive under 140 characters.
-This was not a small feat... If you know The Preston Hamlin, you know this.
-
-![prestonhamlet](https://pbs.twimg.com/media/BqbUK9fIUAABfLG.jpg "Preston Hamlet")
+Our current collection has generated about 52 seemingly "complete thoughts" that arrive under 140 characters.
+This was not a small feat... If you know the Preston Hamlin, you know this.
 
 
 Current Schedule
 -----------------
 **Tweets**
 * 2 tweets per day
-  * posted at `00 10,17 * * *`
-  * Every day at 10am and 5pm (Eastern)
-  * **#Pweets**
+  * posted at `0 10,17 * * *` (Eastern)
 
-**Sonnet Schedule (WIP)**
+**Sonnet Schedule**
 * 3 sonnets per week
-  * posted at `00 13 * * 1,3,5`
-  * Every Monday, Wednesday, and Friday beginning at 1pm (Eastern)
+  * posted at `00 13 * * 1,3,5` (Eastern)
     * 14 Lines, 2 lines per tweet
-    * **#Ponnets**
 
 
 How it Works
 ------------
-When pbotty.py is ran:
-```python
-$ python pbotty.py
+Command overview:
+```bash
+$ python pbotty.py -h
+usage: pbotty.py [-h] [-d] [--init] [--stats] [--quote] [--sonnet]
+
+pbotty(Peabody): script that posts tweets on behalf of one Preston Hamlin.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -d          debug mode
+  --init      initialize
+  --stats     run stats analysis
+  --quote     tweet a random quote
+  --sonnet    tweet a random sonnet (on schedule)
 ```
 
-A quote is randomly chosen based on the following SQL expressions:
-
-First, we find the value for quotes with the minimum number of uses
-```
-SELECT MIN(use_count) FROM quotes
-```
-Then we select one random quote
-```
-SELECT * FROM quotes WHERE use_count=__ ORDER BY RANDOM() LIMIT 1
+Tweeting a random quote:
+```bash
+$ python pbotty.py --quote
 ```
 
-The quote is then tweeted via [@prestonhamlin](http://twitter.com/prestonhamlin) and the `use_count` and `last_used` columns are updated.
+Tweeting a random sonnet:
+```bash
+$ python pbotty.py --sonnet
+```
+
+
+###Statistics
+__________
+
+```bash
+$ python pbotty.py --stats
+most frequently used (23): number
+largest word: parameterization
+unique words: 1599
+```
+
 
 Currently the data source is a stripped body of text which we curated from many pieces that Preston **actually** wrote.
 
+<br>
+To Do
+----------
+[ ] Add update command to add entries to databases
+<br>
+[ ] Add web interface for collecting public submissions
+<br>
+[X] Add Statistical Analysis Data
 
-Data Schema
------------
-####Tweets
-| id | quote | use_count | last_used |
-| ---- | ----------------- | -------------------| -------------------|
-| 1 | However, However, ... |                 1 | 2014-06-18 10:00:24.592390|
-| 2 | Smalltalk took the ... |                2 | 2014-06-17 13:00:37.930239|
-| 3 | This includes built-in ... |            1 | 2014-06-17 10:00:12.002932|
 
 <br>
-
-####Sonnets
-**coming soon...**
-
 Shout Outs
 ----------
 
