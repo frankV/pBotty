@@ -1,0 +1,16 @@
+  {% for m in mentions[:1] %}
+  <div class="row centered">
+    <div class="col-xs-4">
+      <img src="{{ m.user.GetProfileImageUrl() }}" class="img-responsive img-circle pull-right">
+    </div>
+    <div class="col-xs-8 text-left">
+      <h4><a href="http://www.twitter.com/{{ m.user.screen_name|lower }}">@{{ m.user.screen_name }}</a></h4>
+    </div>
+  </div>
+
+
+  <div class="row centered" style="margin-bottom:10px;">
+      <p class="text-centered">{{ m.text }}</p>
+  </div>
+
+  {% endfor %}

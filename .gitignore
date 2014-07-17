@@ -1,0 +1,4 @@
+*.cfg
+*.db
+*.pyc
+.DS_Store

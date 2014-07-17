@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+
+    <title>@prestonhamlin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- // <script src="assets/js/modernizr.js"></script> -->
+  </head>
+
+  <body>
+
+  <!-- *****************************************************************************************************************
+   HEADERWRAP
+   ***************************************************************************************************************** -->
+  <div id="headerwrap">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-8 col-lg-offset-2">
+          <h1>@PrestonHamlin</h1>
+        </div>
+
+        <div class="col-lg-8 col-lg-offset-2 himg">
+          <img src="{{ url_for('static', filename='img/preston.png') }}" class="img-responsive img-circle">
+        </div>
+
+        <div class="col-lg-8 col-lg-offset-2">
+          <h3>"I built an ALU in MineCraft"</h3>
+        </div>
+
+      </div><!-- /row -->
+    </div> <!-- /container -->
+  </div><!-- /headerwrap -->
+
+  <!-- *****************************************************************************************************************
+   SERVICE LOGOS
+   ***************************************************************************************************************** -->
+   <div id="service">
+    <div class="container">
+      <div class="row centered">
+
+        <div class="col-md-4">
+          <i class="fa fa-heart-o"></i>
+          <h4>Newest Followers</h4>
+          <div id="new_followers"></div>
+        </div>
+
+        <div class="col-md-4">
+          <i class="fa fa-comments"></i>
+          <h4>Mentions</h4>
+          <div id="mentions"></div>
+        </div>
+
+        <div class="col-md-4">
+          <i class="fa fa-comment"></i>
+          <h4>Add A Quote</h4>
+          <p>Preston's pristine vernacular escapes with his every breath. It's our job to collect his articulate morsels.<br />Identification is required to contribute.<br /> Only the Hamlin himself may approve submissions.</p>
+          <!-- <h4><small>Coming Soon...</small></h4> -->
+          {% if current_user.is_authenticated() %}
+            <a data-toggle="modal" data-target="#quoteModal" class="btn btn-large btn-primary" style="width:100%">Add Quote</a>
+          {% else %}
+            <a data-toggle="modal" data-target="#loginModal" class="btn btn-large btn-primary" style="width:100%">Add Quote</a>
+          {% endif %}
+        </div>
+      </div>
+    </div><! --/container -->
+   </div><! --/service -->
+
+
+    <div class="modal fade" id="loginModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom:none;">
+                <button type="button" class="close" data-dismiss="modal">✕</button>
+                <h3>Please Login First</h3>
+            </div>
+
+                <div class="row" style="text-align:center;">
+                    <div class="col-lg-5 col-lg-offset-1 col-md-6" style="padding-bottom: 10px;">
+                      <a href="{{ url_for('auth.facebook_login') }}" class="btn btn-large btn-primary" style="width:80%;">Login with &nbsp;<i class="fa fa-facebook"></i></a>
+                    </div>
+
+                    <div class="col-lg-5 col-md-6" style="padding-bottom: 10px;">
+                      <a href="{{ url_for('auth.twitter_login') }}" class="btn btn-large btn-primary" style="width:80%;background-color:#00b3fe;">Login with &nbsp;<i class="fa fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                      <p>Before you can submit a quote you need to validate your identity.</p>
+                    </div>
+
+                </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="quoteModal">
+      <div class="modal-dialog">
+        <div class="modal-content" style="padding: 10px;">
+            <div class="modal-header" style="border-bottom:none;">
+                <button type="button" class="close" data-dismiss="modal">✕</button>
+                <h3>So what did Preston say, {{ user.name }}?</h3>
+            </div>
+              <div id="submission-area">
+                <div class="row">
+                  <div class="col-md-offset-1 col-md-10">
+                    <p id="char_count" class="help-block text-right">140</p>
+                    <textarea id="quote_field" class="form-control" rows="3"></textarea>
+                    <p class="help-block">You submission must be approved first.</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-offset-8 col-md-3">
+                    <button id="submit_quote" class="btn btn-large btn-primary" style="width:100%">Submit</button>
+                  </div>
+                </div>
+                <br>
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+  <!-- *****************************************************************************************************************
+   TESTIMONIALS
+   ***************************************************************************************************************** -->
+   <div id="twrap">
+    <div class="container centered">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+        <i class="fa fa-twitter"></i>
+        <p id="latest_tweet" class="tweet"></p>
+        </div>
+      </div><! --/row -->
+    </div><! --/container -->
+   </div><! --/twrap -->
+
+  <!-- *****************************************************************************************************************
+   FOOTER
+   ***************************************************************************************************************** -->
+   <div id="footerwrap">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>About</h4>
+          <!-- <div class="hline-w"></div> -->
+          <p>
+            <a href="https://github.com/frankV/pBotty">Peabody (the Preston Twitter Bot)</a>
+          </p>
+        </div>
+        <div class="col-md-4">
+          <h4>Twitter</h4>
+          <!-- <div class="hline-w"></div> -->
+          <p>
+            <a href="https://twitter.com/prestonhamlin">@prestonhamlin</a>
+          </p>
+        </div>
+        <div class="col-md-4">
+          <h4>Location</h4>
+          <!-- <div class="hline-w"></div> -->
+          <p>The Florida State University</p>
+        </div>
+
+      </div><! --/row -->
+    </div><! --/container -->
+   </div><! --/footerwrap -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vendor/retina-1.1.0.js') }}"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+            // /* get latest tweet */
+            // $.get("{{ url_for('frontend.latest_tweet') }}", function(data) {
+            //   console.log(data)
+            //   $('#latest_tweet').html(data.status.text)
+            // });
+
+            // /* get newest followers */
+            // $.get("{{ url_for('frontend.new_followers') }}", function(data) {
+            //   console.log(data)
+            //   $('#new_followers').html(data)
+            // });
+
+            // /* get recent mentions */
+            // $.get("{{ url_for('frontend.mentions') }}", function(data) {
+            //   console.log(data)
+            //   $('#mentions').html(data)
+            // });
+
+
+            $("#quote_field").keyup(function(){
+                el = $(this);
+                if(el.val().length >= 140){
+                    $("#char_count").text(140-el.val().length);
+                    $("#char_count").css('color', 'red');
+                } else {
+                    $("#char_count").text(140-el.val().length);
+                    $("#char_count").css('color', 'green');
+                }
+            });
+
+            $("#submit_quote").click( function() {
+
+              // swith to loader animation
+              var img = "{{ url_for('static', filename='img/spinner.gif') }}";
+              $('#submission-area').html('<div class="row text-center"><img src="'+img+'" class="img-responsive center-block" align="middle" /><br><h4>One sec...</h4></div>')
+
+              $.ajax({
+                  url: "{{ url_for('frontend.add_quote') }}",
+                  type: "post",
+                  quote: $("#quote_field").val(),
+                  success: function(xhr, textStatus) {
+                    console.log(xhr);
+                     $('#submission-area').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Huzzah!</strong> You\'re quote has been submitted.</div>')
+                  },
+                  error: function(xhr, textStatus, errorThrown) {
+                    console.log('error');
+                    console.log(xhr, errorThrown);
+                    $('#submission-area').html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Bollocks!</strong> There was a problem with your submission.</div>')
+                  }
+              });
+            });
+        });
+
+    </script>
+
+  </body>
+</html>

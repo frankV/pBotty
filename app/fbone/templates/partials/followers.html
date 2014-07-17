@@ -1,0 +1,11 @@
+
+  {% for f in followers[:3] %}
+  <div class="row centered" style="margin-bottom:10px;">
+    <div class="col-xs-4">
+      <img src="{{ f.GetProfileImageUrl() }}" class="img-responsive img-circle pull-right">
+    </div>
+    <div class="col-xs-8 text-left">
+      <h4><a href="http://www.twitter.com/{{ f.screen_name|lower }}">@{{ f.screen_name }}</a></h4>
+    </div>
+  </div>
+  {% endfor %}
